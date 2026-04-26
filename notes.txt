@@ -1,0 +1,226 @@
+# 🎨 DRAWING APP (CANVAS) - NOTES
+
+---
+
+1. PROJECT KA PURPOSE
+
+---
+
+Ye app user ko allow karta hai:
+
+* Mouse se drawing karna
+* Brush size change karna
+* Color change karna
+* Canvas clear karna
+
+---
+
+2. HTML STRUCTURE
+
+---
+
+1. Canvas: <canvas id="canvas" width="800" height="800"></canvas>
+   → drawing area
+
+2. Toolbox:
+
+   * Increase button (+)
+   * Decrease button (-)
+   * Size display
+   * Color picker
+   * Clear button
+
+---
+
+3. CANVAS & CONTEXT (IMPORTANT)
+
+---
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+Explanation:
+
+* canvas = drawing area
+* ctx = drawing tool (brush)
+
+👉 ctx ke through hi hum draw karte hain
+
+---
+
+4. VARIABLES
+
+---
+
+let size = 30;
+let isPressed = false;
+let color = "black";
+let x = undefined;
+let y = undefined;
+
+Explanation:
+
+* size → brush size
+* isPressed → mouse click hold ho raha ya nahi
+* color → brush color
+* x, y → last position
+
+---
+
+5. MOUSE EVENTS (CORE LOGIC)
+
+---
+
+1. mousedown:
+   → jab mouse press hota hai
+
+isPressed = true;
+x = e.offsetX;
+y = e.offsetY;
+
+2. mouseup:
+   → jab mouse chhoda jata hai
+
+isPressed = false;
+
+3. mousemove:
+   → jab mouse move hota hai
+
+if (isPressed) → draw karo
+
+---
+
+6. DRAWING LOGIC
+
+---
+
+mousemove ke andar:
+
+drawCircle(x2, y2);
+drawLine(x, y, x2, y2);
+
+Explanation:
+
+* circle → smooth brush
+* line → continuous drawing
+
+---
+
+7. drawCircle FUNCTION
+
+---
+
+ctx.beginPath();
+ctx.arc(x, y, size, 0, Math.PI * 2);
+ctx.fillStyle = color;
+ctx.fill();
+
+Explanation:
+
+* arc → circle banata hai
+* Math.PI * 2 → full circle
+* fill → color fill karta hai
+
+---
+
+8. drawLine FUNCTION
+
+---
+
+ctx.moveTo(x1, y1);
+ctx.lineTo(x2, y2);
+
+Explanation:
+
+* ek point se doosre point tak line
+
+ctx.lineWidth = size * 2;
+
+→ line ko mota karta hai
+
+---
+
+9. BRUSH SIZE CONTROL
+
+---
+
+increase button:
+size += 5
+
+decrease button:
+size -= 5
+
+Limits:
+max = 50
+min = 5
+
+---
+
+10. COLOR CHANGE
+
+---
+
+colorEl.addEventListener("change", (e) => {
+color = e.target.value;
+});
+
+→ user jo color select kare woh brush color ban jata hai
+
+---
+
+11. CLEAR CANVAS
+
+---
+
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+→ poora canvas clean kar deta hai
+
+---
+
+12. UPDATE SIZE DISPLAY
+
+---
+
+sizeEl.innerText = size;
+
+→ UI me size show hota hai
+
+---
+
+13. IMPORTANT CONCEPTS
+
+---
+
+✔ Canvas API
+✔ Mouse Events
+✔ Coordinates (x, y)
+✔ Drawing shapes (circle, line)
+✔ State management (isPressed)
+✔ Dynamic UI update
+
+---
+
+14. DRAWING FLOW
+
+---
+
+1. Mouse press → start drawing
+2. Mouse move → draw hota hai
+3. Mouse release → stop drawing
+
+---
+
+15. IMPROVEMENTS (ADVANCED)
+
+---
+
+* Eraser tool
+* Download image (save drawing)
+* Touch support (mobile)
+* Undo/Redo feature
+* Different brush styles
+
+---
+
+
